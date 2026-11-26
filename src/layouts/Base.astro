@@ -1,0 +1,44 @@
+---
+import "../styles/tokens.css";
+import "../styles/global.css";
+import "../styles/motion.css";
+import "@fontsource-variable/geologica/wght.css";
+import "@fontsource-variable/onest/wght.css";
+import geologicaCyr from "@fontsource-variable/geologica/files/geologica-cyrillic-wght-normal.woff2?url";
+
+interface Props { lang: string; title: string; description: string; canonical?: string; jsonLd?: Record<string, unknown>; }
+const { lang, title, description, canonical, jsonLd } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline>document.documentElement.classList.add("js")</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title data-rec="SE-R-005">{title}</title>
+    <meta name="description" content={description} data-rec="SE-R-005" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="uk_UA" />
+    <meta name="theme-color" content="#F3F4F1" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="logo.svg" type="image/svg+xml" />
+    <link rel="preload" href={geologicaCyr} as="font" type="font/woff2" crossorigin data-rec="SP-R-005" />
+    <slot name="head" />
+    {jsonLd && <script type="application/ld+json" data-rec="SE-R-004,SM-R014" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">До змісту</a>
+    <slot name="header" />
+    <main id="main"><slot /></main>
+    <slot name="footer" />
+    <script src="../scripts/reveal.ts"></script>
+    <script src="../scripts/ui.ts"></script>
+  </body>
+</html>
+
+<style is:global>
+  /* Floor 4, repeated next to <html> and <body> for the linter; the same rule lives in global.css. */
+  html, body { overflow-x: clip; }
+</style>

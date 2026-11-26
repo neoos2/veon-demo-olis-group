@@ -1,0 +1,85 @@
+/* Hallmark · shape: argument (галузь → доказ у м² → ризик простою → розрахунок) · genre: modern-minimal · theme: custom · job: hire · idea: "Головний герой — підлога цеху, який працює; доказ — квадратні метри" · vibe: "світлий бетон, працюючий цех, точні цифри"
+ * paper: #F3F4F1 · accent: #F59713 (signal), primary #0B6B31 · display: Geologica · body: Onest · hero: великий H1 на світлому полі, справа речення і дія «Подзвонити» з Viber і Telegram, докази на лінії, панорама цеху «Вацака» під текстом · nav: світла закріплена, якорі + номер і месенджери праворуч (B2B-контакт — функція) · footer: графітовий, контакти + меню одним рядком · imagery: client photos · signature: площі в м² як маркування підлоги
+ * axes: light/geometric-sans/chromatic-green · posture: restrained · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: E (у блоках systems і geography немає фото), компенсовано масою типографіки, лініями і зміною паперу */
+/* Hallmark · waive 44c · hero на 1440x900 закінчується на 1002 px, нижче краю лише частина панорами · панорама цеху задумана як смуга під доказами (concept.md, перший екран): її верх у першому екрані доводить H1, повна висота свідомо нижче */
+
+/* Client design tokens — only from design/concept.md (veon-concept colors, fonts). */
+:root {
+  /* colour roles */
+  --color-bg: #F3F4F1;
+  --color-surface: #E5E8E3;
+  --color-text: #1D2420;
+  --color-text-muted: #545C57;
+  --color-primary: #0B6B31;
+  --color-primary-strong: #08522A;
+  --color-on-primary: #F3F4F1;
+  --color-brand: #118E40;
+  --color-accent: #F59713;
+  --color-accent-ink: #1D2420;
+  --color-field: #222A26;
+  --color-on-field: #E9ECE8;
+  --color-on-field-muted: #B4BCB6;
+  --color-on-field-accent: #5FC07F;
+  --color-border: #7D8681;
+  --color-rule: #C9CEC8;
+  --color-rule-dark: #46504B;
+
+  /* type */
+  --font-display: "Geologica Variable", "Geologica", system-ui, sans-serif;
+  --font-body: "Onest Variable", "Onest", system-ui, sans-serif;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.875rem;
+  --text-md: 1.0625rem;
+  --text-lead: 1.3125rem;
+  --text-title: 1.6875rem;
+  --text-section: clamp(2rem, 1.4rem + 2.2vw, 3.25rem);
+  --text-display: clamp(2.5rem, 1.2rem + 5vw, 5.5rem);
+  --text-area: clamp(3.5rem, 2rem + 7vw, 8rem);
+  --weight-display: 800;
+  --weight-strong: 600;
+  --weight-body: 400;
+
+  /* space: 4/8 scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 40px;
+  --space-7: 64px;
+  --space-8: 96px;
+  --space-9: 144px;
+  --section-gap: var(--space-8);
+  --section-gap-l: var(--space-9);
+  --section-gap-band: var(--space-7);
+  --space: clamp(16px, 5vw, 120px);
+  --gap: var(--space-5);
+  --container: 1360px;
+  --header-h: 72px;
+  --bar-h: 64px;
+
+  /* shape */
+  --radius: 4px;
+  --line: 1px;
+  --line-strong: 2px;
+  --control-h: 52px;
+  --control-h-lg: 56px;
+
+  /* motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in: cubic-bezier(.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(.6, 0, .2, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 600ms;
+  --dur-line: 700ms;
+  --dur: var(--dur-long);
+}
+
+@media (max-width: 60rem) {
+  :root { --section-gap: 80px; --section-gap-l: var(--space-8); }
+}
+@media (max-width: 40rem) {
+  :root { --gap: var(--space-4); --header-h: 60px; --section-gap: 56px; --section-gap-l: 72px; --section-gap-band: 56px; --dur-line: 500ms; }
+}

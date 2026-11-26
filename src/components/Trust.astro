@@ -1,0 +1,66 @@
+---
+import Section from "./Section.astro";
+import FutureLink from "./FutureLink.astro";
+import { suppliers, youtube, legalName, FUTURE } from "../data/site";
+---
+<Section id="trust" class="trust">
+  <div class="container">
+    <h2 class="trust__title">Гарантія записана в договорі</h2>
+    <div class="trust__grid">
+      <article class="doc" aria-labelledby="doc-title">
+        <p class="doc__meta">Остання редакція 11.08.2026</p>
+        <h3 id="doc-title" class="doc__title">Угода про гарантійні зобов'язання</h3>
+        <ul class="doc__list">
+          <li>Невід'ємна частина договорів будівельного підряду {legalName}.</li>
+          <li>Гарантійні строки визначаються договором.</li>
+          <li>Гарантійний ремонт — безкоштовний.</li>
+        </ul>
+        <p class="doc__more"><FutureLink note={FUTURE}>Текст угоди</FutureLink></p>
+      </article>
+
+      <div class="trust__side">
+        <div class="trust__fig">
+          <p class="trust__num nums">70%</p>
+          <p>замовників співпрацюють з нами повторно</p>
+        </div>
+        <div class="trust__row">
+          <h3 class="trust__h">Працюємо на матеріалах Sika</h3>
+          <p class="muted">Постачальники: {suppliers}.</p>
+        </div>
+        <div class="trust__row" data-rec="SM-R013">
+          <h3 class="trust__h">Відеовідгуки клієнтів</h3>
+          <p class="muted">ПГО «Ласка», КД «Вацак», пивоварня «Правда», «Дубномолоко» та інші розповідають про свої підлоги.</p>
+          <a class="text-link trust__yt" href={youtube} target="_blank" rel="noopener">Відеовідгуки на YouTube<span class="visually-hidden"> (відкриється в новій вкладці)</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>
+
+<style>
+  .trust { padding-block: var(--section-gap) var(--section-gap); }
+  .trust__title { max-width: 14ch; margin-bottom: var(--space-7); }
+  .trust__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--space-7); align-items: stretch; }
+  .doc { grid-column: 1 / 7; background: var(--color-surface); border-top: 6px solid var(--color-brand); padding: var(--space-6); display: grid; gap: var(--space-4); align-content: start; }
+  .doc__meta { font-size: var(--text-sm); color: var(--color-text-muted); }
+  .doc__title { font-family: var(--font-display); font-weight: var(--weight-display); font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem); line-height: 1.1; letter-spacing: -0.02em; }
+  .doc__list { list-style: none; display: grid; border-top: var(--line) solid var(--color-rule); }
+  .doc__list li { padding-block: var(--space-4); border-bottom: var(--line) solid var(--color-rule); font-size: var(--text-md); }
+  .doc__more { font-weight: var(--weight-strong); }
+
+  .trust__side { grid-column: 8 / 13; display: grid; gap: var(--space-6); align-content: space-between; }
+  .trust__fig { display: grid; gap: var(--space-2); }
+  .trust__num { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-area); line-height: .9; letter-spacing: -0.035em; color: var(--color-primary); }
+  .trust__fig p:last-child { font-size: var(--text-lead); max-width: 28ch; }
+  .trust__row { display: grid; gap: var(--space-2); padding-top: var(--space-5); border-top: var(--line) solid var(--color-rule); justify-items: start; }
+  .trust__h { font-size: var(--text-lead); }
+  .trust__yt { margin-top: var(--space-2); min-height: 44px; display: inline-flex; align-items: center; }
+
+  @media (max-width: 60rem) {
+    .doc, .trust__side { grid-column: 1 / 13; }
+  }
+  @media (max-width: 40rem) {
+    .doc { padding: var(--space-5); }
+    .trust__title { margin-bottom: var(--space-6); }
+  }
+</style>

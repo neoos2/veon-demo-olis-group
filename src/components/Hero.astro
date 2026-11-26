@@ -1,0 +1,112 @@
+---
+import Section from "./Section.astro";
+import { mainPhone, viber, telegram, srcset, size } from "../data/site";
+const wide = size("hero-wide", 1280);
+const tall = size("hero-tall", 640);
+---
+<Section id="hero" class="hero" rec="UX-R-001,UX-R-007,SP-R-001,SE-R-007,GA-R-006,MA-R-005">
+  <div class="container grid12 hero__grid">
+    <h1 class="hero__title">Промислові підлоги без зупинки виробництва</h1>
+
+    <div class="hero__aside">
+      <p class="hero__sentence">Будуємо і реконструюємо підлоги діючих виробництв: рішення, придатні до повного навантаження через 4 години.</p>
+      <div class="hero__actions" data-rec="UX-R-006">
+        <a class="btn btn--primary hero__call" href={`tel:${mainPhone.tel}`}>Подзвонити <span class="nums hero__num">{mainPhone.label}</span></a>
+        <div class="hero__msgs">
+          <a class="btn btn--outline" href={viber}>Написати у Viber</a>
+          <a class="btn btn--outline" href={telegram}>Telegram</a>
+        </div>
+        <p class="hero__terms"><span class="signal">Від 300 м², по всій Україні</span></p>
+        <a class="text-link hero__prep" href="#estimate">Що підготувати для розрахунку</a>
+      </div>
+    </div>
+
+    <ul class="hero__proofs" aria-label="Коротко про Olis-Group">
+      <li class="proof" style="--i:0"><span class="proof__fig nums">з 2007</span><span class="proof__txt">будуємо промислові підлоги</span></li>
+      <li class="proof" style="--i:1"><span class="proof__fig nums">1850+</span><span class="proof__txt">об'єктів побудовано</span></li>
+      <li class="proof" style="--i:2"><span class="proof__fig">Sika</span><span class="proof__txt">матеріали, на яких працюємо</span></li>
+      <li class="proof" style="--i:3"><span class="proof__fig nums">4 год</span><span class="proof__txt">до повного навантаження підлоги</span></li>
+    </ul>
+  </div>
+
+  <figure class="hero__photo">
+    <picture>
+      <source media="(max-width: 40rem)" srcset={srcset("hero-tall", [480, 640])} sizes="100vw" width={tall.width} height={tall.height} />
+      <img src={wide.src} srcset={srcset("hero-wide", [800, 1280, 1778])} sizes="(max-width: 85rem) 100vw, 1360px" width={wide.width} height={wide.height} alt="Цех КД «Вацак» під час зміни: працівниці за столами, світла полімерна підлога на всю глибину цеху" fetchpriority="high" decoding="async" data-rec="SP-R-002" />
+    </picture>
+    <figcaption class="container hero__caption">Цех КД «Вацак», 7 500 м² підлоги</figcaption>
+  </figure>
+</Section>
+
+<style>
+  .hero { padding-top: var(--space-6); display: flex; flex-direction: column; min-height: calc(100svh - var(--header-h)); }
+  .hero__grid { row-gap: var(--space-6); align-items: end; }
+  .hero__title { grid-column: 1 / 9; font-size: var(--text-display); max-width: 11ch; text-wrap: balance; }
+  .hero__aside { grid-column: 9 / 13; display: grid; gap: var(--space-5); padding-bottom: var(--space-2); }
+  .hero__sentence { font-size: var(--text-lead); line-height: 1.45; color: var(--color-text); }
+  .hero__actions { display: grid; gap: var(--space-3); justify-items: start; }
+  .hero__call { min-height: var(--control-h); font-size: var(--text-md); white-space: nowrap; }
+  .hero__num { font-weight: var(--weight-body); opacity: .92; }
+  .hero__msgs { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .hero__terms { margin-top: var(--space-1); }
+  .hero__prep { font-size: var(--text-sm); }
+
+  .hero__proofs {
+    grid-column: 1 / 13; list-style: none; position: relative;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--gap);
+    padding-top: var(--space-5); margin-top: var(--space-2);
+  }
+  /* Effect 1: the line pours left to right, the proofs follow it. */
+  .hero__proofs::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: var(--line-strong);
+    background: var(--color-text); transform-origin: left;
+    animation: pour var(--dur-line) var(--ease-out) both;
+  }
+  .proof { display: grid; gap: var(--space-1); align-content: start; animation: rise var(--dur-short) var(--ease-out) both; animation-delay: calc(var(--dur-line) * .55 + var(--i) * 60ms); }
+  .proof__fig { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-title); line-height: 1.1; letter-spacing: -0.01em; }
+  .proof__txt { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.4; max-width: 22ch; }
+  @keyframes pour { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* The panorama takes whatever height the first screen has left, never less than 22rem. */
+  .hero__photo { margin-top: var(--space-6); flex: 1 1 auto; display: flex; flex-direction: column; min-height: 22rem; }
+  .hero__photo picture { position: relative; flex: 1 1 auto; display: block; background: var(--color-surface); }
+  .hero__photo img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 62%; }
+  .hero__caption { padding-top: var(--space-3); font-size: var(--text-sm); color: var(--color-text-muted); }
+
+  @media (max-width: 75rem) {
+    .hero__title { grid-column: 1 / 13; max-width: 13ch; }
+    .hero__aside { grid-column: 1 / 10; }
+  }
+  @media (max-width: 60rem) {
+    .hero__aside { grid-column: 1 / 13; }
+    .hero__proofs { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-5); }
+  }
+  /* Phone: its own composition — H1, sentence, full-width call, two messengers, terms, a 4:5-ish crop, proofs 2×2. */
+  @media (max-width: 40rem) {
+    .hero { padding-top: var(--space-5); display: flex; flex-direction: column; }
+    .hero__grid { display: contents; }
+    .hero__title { order: 1; width: auto; max-width: none; margin-inline: var(--space); font-size: clamp(2.25rem, 1.4rem + 4vw, 2.75rem); text-wrap: balance; }
+    .hero__aside { order: 2; width: auto; margin: var(--space-4) var(--space) 0; gap: var(--space-4); }
+    .hero__sentence { font-size: var(--text-md); color: var(--color-text-muted); }
+    .hero__actions { justify-items: stretch; }
+    .hero__call { width: 100%; }
+    .hero__msgs { display: grid; grid-template-columns: 1fr 1fr; }
+    .hero__msgs .btn { padding-inline: var(--space-3); }
+    .hero__prep { justify-self: start; min-height: 44px; display: inline-flex; align-items: center; }
+    .hero { min-height: 0; }
+    .hero__photo { order: 4; margin-top: var(--space-5); min-height: 0; flex: none; }
+    .hero__photo picture { flex: none; }
+    .hero__photo img { position: static; height: auto; aspect-ratio: 640 / 700; }
+    /* Proofs sit right under the actions, compact 2×2, so they stay on the first phone screen. */
+    .hero__proofs { order: 3; width: auto; margin: var(--space-4) var(--space) 0; padding-top: var(--space-3); row-gap: var(--space-3); }
+    .proof { gap: 0; }
+    .proof__fig { font-size: var(--text-md); }
+    .proof__txt { font-size: var(--text-xs); line-height: 1.3; }
+  }
+  @media (max-width: 22.5rem) {
+    .hero__msgs { grid-template-columns: 1fr; }
+    .hero__call { padding-inline: var(--space-3); gap: var(--space-2); }
+    .hero__num { font-size: var(--text-sm); }
+  }
+</style>

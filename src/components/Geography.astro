@@ -1,0 +1,45 @@
+---
+import Section from "./Section.astro";
+import FutureLink from "./FutureLink.astro";
+import { cities, officeCity, FUTURE } from "../data/site";
+---
+<Section id="geography" class="geo">
+  <div class="container">
+    <div class="geo__head">
+      <h2>Об'єкти у 24 містах України</h2>
+      <p class="lead">Працюємо по всій країні. Офіс — у Кропивницькому.</p>
+    </div>
+    <ul class="geo__list">
+      {cities.map((c) => (
+        <li class:list={[{ "is-office": c === officeCity }]}>
+          <FutureLink note={FUTURE}>{c}</FutureLink>
+          {c === officeCity && <span class="geo__office">офіс</span>}
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>
+
+<style>
+  .geo { padding-block: var(--section-gap) var(--section-gap); border-top: var(--line) solid var(--color-rule); }
+  .geo__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--space-4); align-items: end; margin-bottom: var(--space-7); }
+  .geo__head h2 { grid-column: 1 / 8; }
+  .geo__head .lead { grid-column: 8 / 13; }
+  .geo__list { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(6, auto); grid-auto-flow: column; column-gap: var(--gap); }
+  .geo__list li { min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); padding-block: var(--space-3); border-bottom: var(--line) solid var(--color-rule); font-family: var(--font-display); font-weight: 600; font-size: var(--text-lead); letter-spacing: -0.01em; }
+  .geo__list :global(.future-link) { text-decoration-color: transparent; transition: text-decoration-color var(--dur-micro) var(--ease-out); }
+  @media (hover: hover) { .geo__list :global(.future-link:hover) { text-decoration-color: var(--color-border); } }
+  .geo__list .is-office { font-weight: var(--weight-display); }
+  .geo__office { font-family: var(--font-body); font-weight: var(--weight-strong); font-size: var(--text-xs); background: var(--color-accent); color: var(--color-accent-ink); padding: 2px var(--space-2); border-radius: var(--radius); }
+  @media (max-width: 60rem) {
+    .geo__head h2, .geo__head .lead { grid-column: 1 / 13; }
+    .geo__list { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(8, auto); }
+  }
+  @media (max-width: 40rem) {
+    /* Phone: three columns of plain names, no rules. */
+    .geo__list { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(8, auto); column-gap: var(--space-3); }
+    .geo__list { column-gap: var(--space-2); }
+    .geo__list li { font-size: var(--text-xs); min-height: 40px; align-items: flex-start; align-content: flex-start; border-bottom: 0; padding-block: var(--space-2) 0; hyphens: manual; }
+    .geo__list :global(.future-link) { min-width: 0; }
+  }
+</style>

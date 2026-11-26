@@ -1,0 +1,61 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { footerFuture, nav, phones, email, address, hours, socials, legalName, edrpou, FUTURE } from "../data/site";
+const year = 2026;
+---
+<footer class="foot on-field" data-rec="SM-R012">
+  <div class="container foot__grid">
+    <div class="foot__brand">
+      <a class="foot__logo" href="#hero" aria-label="Olis-Group, на початок сторінки"><img src="logo-white.svg" width="168" height="40" alt="Olis-Group, будівельна компанія" data-rec="SP-R-006" /></a>
+      <p>Промислові підлоги для виробництв з 2007 року.</p>
+    </div>
+    <div class="foot__contacts">
+      <ul class="tel-list foot__tels">
+        {phones.map((p) => <li><a class="nums" href={`tel:${p.tel}`}>{p.label}</a></li>)}
+      </ul>
+      <p><a href={`mailto:${email}`}>{email}</a></p>
+      <p class="foot__muted">{address.postal}, м. {address.city}, {address.street}</p>
+      <p class="foot__muted">{hours}</p>
+    </div>
+    <nav class="foot__nav" aria-label="Меню в підвалі">
+      <ul>
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        {footerFuture.map((l) => <li><FutureLink note={FUTURE}>{l}</FutureLink></li>)}
+      </ul>
+    </nav>
+    <ul class="foot__social" aria-label="Соцмережі Olis-Group">
+      {socials.map((s) => <li><a href={s.url} target="_blank" rel="noopener">{s.name}<span class="visually-hidden"> (відкриється в новій вкладці)</span></a></li>)}
+    </ul>
+    <p class="foot__legal">© {year} {legalName}, ЄДРПОУ {edrpou}</p>
+  </div>
+</footer>
+
+<style>
+  .foot { background: var(--color-field); color: var(--color-on-field); padding-block: var(--space-8) var(--space-6); }
+  .foot a { color: inherit; text-underline-offset: .22em; text-decoration-thickness: 1px; transition: color var(--dur-micro) var(--ease-out); }
+  @media (hover: hover) { .foot a:hover { color: var(--color-on-field-accent); } }
+  .foot__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--space-6); }
+  .foot__brand { grid-column: 1 / 5; display: grid; gap: var(--space-4); align-content: start; color: var(--color-on-field-muted); }
+  .foot__logo { display: inline-block; justify-self: start; }
+  .foot__logo img { width: 168px; height: 40px; }
+  .foot__contacts { grid-column: 6 / 13; display: grid; gap: var(--space-2); }
+  .foot__tels { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-lead); }
+  .foot__tels a { text-decoration: none; min-height: 44px; display: inline-flex; align-items: center; }
+  .foot__tels li + li::before { color: var(--color-on-field-muted); }
+  .foot__muted { color: var(--color-on-field-muted); }
+  .foot__nav { grid-column: 1 / 13; border-top: var(--line) solid var(--color-rule-dark); padding-top: var(--space-5); }
+  .foot__nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+  .foot__nav a, .foot__nav :global(.future-link) { min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; }
+  .foot__nav :global(.future-link) { color: var(--color-on-field-muted); text-decoration-color: var(--color-on-field-muted); }
+  .foot__social { grid-column: 1 / 13; list-style: none; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font-weight: var(--weight-strong); }
+  .foot__social a { min-height: 44px; display: inline-flex; align-items: center; }
+  .foot__legal { grid-column: 1 / 13; font-size: var(--text-sm); color: var(--color-on-field-muted); }
+  @media (max-width: 60rem) {
+    .foot__brand, .foot__contacts { grid-column: 1 / 13; }
+  }
+  @media (max-width: 40rem) {
+    .foot__tels { font-size: var(--text-lead); flex-direction: column; align-items: flex-start; }
+    .foot__tels li + li::before { content: none; }
+    .foot__tels li + li { border-top: var(--line) solid var(--color-rule-dark); width: 100%; }
+  }
+</style>

@@ -1,0 +1,47 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Industries from "../components/Industries.astro";
+import Cases from "../components/Cases.astro";
+import Process from "../components/Process.astro";
+import Systems from "../components/Systems.astro";
+import Trust from "../components/Trust.astro";
+import Geography from "../components/Geography.astro";
+import Estimate from "../components/Estimate.astro";
+import Footer from "../components/Footer.astro";
+import MobileBar from "../components/MobileBar.astro";
+import { phones, email, address, socials, legalName } from "../data/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "GeneralContractor",
+  name: "Olis-Group",
+  legalName,
+  description: "Промислові підлоги для виробництв: будівництво та реконструкція без зупинки виробництва.",
+  foundingDate: "2007",
+  address: { "@type": "PostalAddress", streetAddress: address.street, addressLocality: address.city, postalCode: address.postal, addressCountry: "UA" },
+  telephone: phones.map((p) => p.tel),
+  email,
+  areaServed: { "@type": "Country", name: "Україна" },
+  sameAs: socials.map((s) => s.url),
+};
+---
+<Base
+  lang="uk"
+  title="Промислові підлоги для виробництв — Olis-Group"
+  description="Промислові підлоги для харчових виробництв, заводів і логістики без зупинки цеху. Матеріали Sika, з 2007 року, понад 1850 об'єктів по всій Україні."
+  jsonLd={jsonLd}
+>
+  <Header slot="header" />
+  <Hero />
+  <Industries />
+  <Cases />
+  <Process />
+  <Systems />
+  <Trust />
+  <Geography />
+  <Estimate />
+  <Footer slot="footer" />
+  <MobileBar slot="footer" />
+</Base>

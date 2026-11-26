@@ -1,0 +1,14 @@
+/* Effect 4 (process): the line of the full cycle draws, the numerals follow one by one.
+   Hidden states exist only under .js (set in Base.astro before paint); reduced motion shows the end state. */
+.js .steps::before { transition: transform 900ms var(--ease-out); }
+.js .steps:not(.is-visible)::before { transform: scaleX(0); }
+.js .steps .step { transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out); transition-delay: calc(300ms + var(--i) * 80ms); }
+.js .steps:not(.is-visible) .step { opacity: 0; transform: translateY(8px); }
+@media (max-width: 60rem) {
+  .js .steps::before { transition-duration: var(--dur-long); }
+  .js .steps:not(.is-visible)::before { transform: scaleY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .steps::before, .js .steps:not(.is-visible)::before { transform: none; transition: none; }
+  .js .steps:not(.is-visible) .step { opacity: 1; transform: none; transition: none; }
+}

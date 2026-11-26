@@ -1,0 +1,118 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { nav, navFuture, mainPhone, viber, telegram, FUTURE } from "../data/site";
+---
+<header class="site-header" data-header data-rec="UX-R-002,UX-R-017">
+  <div class="container site-header__row">
+    <a class="logo" href="#hero" aria-label="Olis-Group, на початок сторінки">
+      <img src="logo.svg" width="168" height="40" alt="Olis-Group, будівельна компанія" data-rec="SP-R-006" />
+    </a>
+
+    <nav class="nav" id="site-nav" aria-label="Головне меню" data-nav>
+      <ul class="nav__list">
+        {nav.map((n) => <li><a class="nav__link" href={n.href}>{n.label}</a></li>)}
+        {navFuture.map((label) => <li class="nav__future"><FutureLink note={FUTURE}>{label}</FutureLink></li>)}
+      </ul>
+      <div class="nav__contacts">
+        <a class="nav__phone nums" href={`tel:${mainPhone.tel}`}>{mainPhone.label}</a>
+        <a class="nav__msg" href={viber}>Viber</a>
+        <a class="nav__msg" href={telegram}>Telegram</a>
+        <span class="nav__lang"><span aria-current="true" lang="uk">UA</span><FutureLink note={FUTURE}><span lang="ru">RU</span></FutureLink></span>
+      </div>
+    </nav>
+
+    <div class="site-header__mobile">
+      <a class="icon-btn" href={`tel:${mainPhone.tel}`} aria-label={`Подзвонити ${mainPhone.label}`}>
+        <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.3.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-btn>
+        <span class="menu-btn__bars" aria-hidden="true"></span>
+        <span class="menu-btn__label">Меню</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--color-bg);
+    border-bottom: var(--line) solid transparent;
+    transition: border-color var(--dur-short) var(--ease-out);
+  }
+  .site-header.is-scrolled { border-bottom-color: var(--color-rule); }
+  .site-header__row { display: flex; align-items: center; gap: var(--space-5); min-height: var(--header-h); }
+  .logo { display: block; flex: none; border-radius: var(--radius); }
+  .logo img { width: 168px; height: 40px; }
+
+  .nav { display: flex; align-items: center; gap: var(--space-5); flex: 1; min-width: 0; }
+  .nav__list { list-style: none; display: flex; align-items: center; gap: var(--space-4) var(--space-5); margin-inline: auto; }
+  .nav__link, .nav__future :global(.future-link) {
+    font-size: var(--text-sm); font-weight: var(--weight-strong); white-space: nowrap;
+    padding-block: var(--space-2);
+  }
+  .nav__link { position: relative; text-decoration: none; transition: color var(--dur-micro) var(--ease-out); }
+  .nav__link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: var(--line-strong); background: var(--color-primary); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-short) var(--ease-out); }
+  .nav__future :global(.future-link) { color: var(--color-text-muted); }
+  @media (hover: hover) { .nav__link:hover { color: var(--color-primary); } .nav__link:hover::after { transform: scaleX(1); } }
+
+  .nav__contacts { display: flex; align-items: center; gap: var(--space-4); flex: none; }
+  .nav__phone { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-md); text-decoration: none; white-space: nowrap; color: var(--color-text); }
+  .nav__msg { font-size: var(--text-sm); font-weight: var(--weight-strong); color: var(--color-primary); text-underline-offset: .22em; white-space: nowrap; }
+  @media (hover: hover) { .nav__phone:hover { color: var(--color-primary); } .nav__msg:hover { color: var(--color-primary-strong); text-decoration-thickness: 2px; } }
+  .nav__lang { display: inline-flex; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-text-muted); padding-left: var(--space-4); border-left: var(--line) solid var(--color-rule); }
+  .nav__lang [aria-current] { color: var(--color-text); font-weight: var(--weight-strong); }
+
+  .site-header__mobile { display: none; margin-left: auto; align-items: center; gap: var(--space-2); }
+  .icon-btn, .menu-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+    min-width: 44px; min-height: 44px; padding: 0 var(--space-3);
+    border: var(--line) solid var(--color-border); border-radius: var(--radius);
+    background: transparent; color: var(--color-text); font: var(--weight-strong) var(--text-sm)/1 var(--font-body); cursor: pointer;
+    transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+  }
+  .icon-btn { color: var(--color-primary); border-color: var(--color-primary); padding: 0; }
+  .icon-btn:active, .menu-btn:active { transform: scale(.98); }
+  .menu-btn__bars, .menu-btn__bars::before { display: block; width: 18px; height: var(--line-strong); background: currentColor; position: relative; transition: transform var(--dur-short) var(--ease-in-out); }
+  .menu-btn__bars::before { content: ""; position: absolute; left: 0; top: 6px; }
+  .menu-btn__bars { transform: translateY(-3px); }
+  .menu-btn[aria-expanded="true"] .menu-btn__bars { transform: translateY(0) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] .menu-btn__bars::before { transform: translateY(-6px) rotate(-90deg); }
+
+  /* Collapse the row, not the labels. */
+  @media (max-width: 84rem) {
+    .nav__future { display: none; }
+  }
+  @media (max-width: 75rem) {
+    .site-header__mobile { display: flex; }
+    .nav {
+      position: absolute; left: 0; right: 0; top: 100%;
+      flex-direction: column; align-items: stretch; gap: var(--space-5);
+      padding: var(--space-4) var(--space) var(--space-6);
+      background: var(--color-bg); border-bottom: var(--line) solid var(--color-rule);
+      max-height: calc(100dvh - var(--header-h)); overflow-y: auto;
+    }
+    :global(.js) .nav:not(.is-open) { display: none; }
+    :global(html:not(.js)) .site-header { position: static; }
+    :global(html:not(.js)) .nav { position: static; padding-inline: 0; }
+    .nav__list { flex-direction: column; align-items: stretch; gap: 0; margin: 0; }
+    .nav__list li { border-bottom: var(--line) solid var(--color-rule); }
+    .nav__link::after { display: none; }
+    .nav__future { display: block; }
+    .nav__link, .nav__future :global(.future-link) { display: flex; min-height: 52px; align-items: center; font-size: var(--text-lead); font-family: var(--font-display); font-weight: var(--weight-display); }
+    /* Contacts grouped: the number on its own line, two messenger buttons side by side, language last. */
+    .nav__contacts { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); padding: var(--space-4); background: var(--color-surface); border-radius: var(--radius); }
+    .nav__phone { grid-column: 1 / -1; font-size: var(--text-lead); min-height: 44px; display: inline-flex; align-items: center; }
+    .nav__msg { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; font-size: var(--text-md); color: var(--color-text); text-decoration: none; border: var(--line) solid var(--color-border); border-radius: var(--radius); background: var(--color-bg); }
+    .nav__lang { grid-column: 1 / -1; padding-left: 0; border-left: 0; min-height: 44px; align-items: center; }
+    /* Future sections say so in the menu itself, not only on hover. */
+    .nav__future :global(.future-link) { text-decoration: none; gap: var(--space-3); }
+    .nav__future :global(.future-link__note) { position: static; transform: none; opacity: 1; background: none; color: var(--color-text-muted); padding: 0; font-size: var(--text-sm); font-family: var(--font-body); font-weight: var(--weight-body); }
+    .nav__future :global(.future-link:hover .future-link__note), .nav__future :global(.future-link:focus-visible .future-link__note) { transform: none; }
+  }
+  @media (max-width: 40rem) {
+    .logo img { width: 134px; height: 32px; }
+    .menu-btn__label { display: none; }
+    .menu-btn { padding: 0; }
+  }
+</style>

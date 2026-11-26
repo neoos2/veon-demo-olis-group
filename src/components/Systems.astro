@@ -1,0 +1,65 @@
+---
+import Section from "./Section.astro";
+import FutureLink from "./FutureLink.astro";
+import { systems, FUTURE } from "../data/site";
+---
+<Section id="systems" class="systems" rec="UX-R-009">
+  <div class="container">
+    <div class="systems__head">
+      <h2>Від основи до трапа AISI 316</h2>
+      <p class="lead">15 послуг у чотирьох групах: покриття, гігієна, захист, інженерія.</p>
+    </div>
+    <div class="groups">
+      {systems.map((g, i) => (
+        <details class="group" open data-group>
+          <summary class="group__sum">
+            <h3 class="group__name">{g.group}</h3>
+            <span class="group__count nums">{g.items.length} {g.items.length > 4 ? "послуг" : "послуги"}</span>
+            <span class="group__icon" aria-hidden="true"></span>
+          </summary>
+          <ul class="group__items">
+            {g.items.map((it) => <li>{it}</li>)}
+          </ul>
+        </details>
+      ))}
+    </div>
+    <p class="systems__all"><FutureLink note={FUTURE}>Усі послуги</FutureLink></p>
+  </div>
+</Section>
+
+<style>
+  .systems { padding-block: var(--section-gap-l) var(--section-gap); }
+  .systems__head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--space-4); align-items: end; margin-bottom: var(--space-7); }
+  .systems__head h2 { grid-column: 1 / 8; }
+  .systems__head .lead { grid-column: 8 / 13; }
+
+  .groups { border-top: var(--line-strong) solid var(--color-text); }
+  .group { border-bottom: var(--line) solid var(--color-rule); }
+  .group[open] { padding-bottom: var(--space-6); }
+  .group__sum {
+    list-style: none; cursor: pointer; display: flex; flex-wrap: wrap; column-gap: var(--space-4); row-gap: var(--space-1); align-items: baseline;
+    padding-block: var(--space-5); min-height: 72px;
+  }
+  .group__sum::-webkit-details-marker { display: none; }
+  .group__name { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-title); letter-spacing: -0.01em; }
+  .group__count { font-family: var(--font-body); font-weight: var(--weight-strong); font-size: var(--text-sm); color: var(--color-text-muted); margin-left: var(--space-2); letter-spacing: 0; }
+  .group__icon { margin-left: auto; align-self: center; position: relative; flex: none; width: 20px; height: 20px; }
+  .group__icon::before, .group__icon::after { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: var(--line-strong); background: var(--color-text); transition: transform var(--dur-short) var(--ease-in-out); }
+  .group__icon::after { transform: rotate(90deg); }
+  .group[open] .group__icon::after { transform: rotate(0deg); }
+  @media (hover: hover) { .group__sum:hover .group__name { color: var(--color-primary); } }
+  .group__sum:focus-visible { outline-offset: -2px; }
+
+  .group__items { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--gap); row-gap: var(--space-3); }
+  .group__items li { line-height: 1.4; }
+  .systems__all { margin-top: var(--space-5); font-weight: var(--weight-strong); }
+
+  @media (max-width: 60rem) {
+    .systems__head h2, .systems__head .lead { grid-column: 1 / 13; }
+    .group__items { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 40rem) {
+    .group__name { font-size: var(--text-lead); }
+    .group__items { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import { mainPhone, viber, telegram } from "../data/site";
+---
+<div class="bar" data-bar data-rec="UX-R-002,UX-R-010,GA-R-006,MA-R-005">
+  <a class="bar__btn bar__btn--call" href={`tel:${mainPhone.tel}`} aria-label={`Подзвонити ${mainPhone.label}`}>Подзвонити</a>
+  <a class="bar__btn" href={viber}>Viber</a>
+  <a class="bar__btn" href={telegram}>Telegram</a>
+</div>
+
+<style>
+  .bar { display: none; }
+  /* The page keeps room under the fixed bar, so it never covers the footer or the last line. */
+  @media (max-width: 40rem) { :global(body) { padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom)); } }
+  @media (max-width: 40rem) {
+    /* Effect 5 (part): the channel bar slides up once the hero is gone; the page keeps room for it, nothing is covered. */
+    .bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+      display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: var(--space-2);
+      padding: var(--space-2) var(--space-3) calc(var(--space-2) + env(safe-area-inset-bottom));
+      background: var(--color-bg); border-top: var(--line) solid var(--color-rule);
+      transition: transform var(--dur-short) var(--ease-out), visibility var(--dur-short);
+    }
+    .bar:global(.is-armed):not(.is-shown) { transform: translateY(110%); visibility: hidden; }
+    .bar__btn {
+      display: flex; align-items: center; justify-content: center; min-height: 48px;
+      border: var(--line) solid var(--color-border); border-radius: var(--radius);
+      font-weight: var(--weight-strong); font-size: var(--text-md); text-decoration: none; color: var(--color-text);
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .bar__btn:active { transform: scale(.98); }
+    .bar__btn--call { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-on-primary); }
+  }
+</style>
